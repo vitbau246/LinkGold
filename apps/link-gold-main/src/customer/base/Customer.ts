@@ -12,9 +12,16 @@ https://docs.amplication.com/how-to/custom-code
 import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { Address } from "../../address/base/Address";
-import { ValidateNested, IsOptional, IsDate, IsString } from "class-validator";
+import {
+  ValidateNested,
+  IsOptional,
+  IsDate,
+  IsString,
+  IsInt,
+} from "class-validator";
 import { Type } from "class-transformer";
 import { Order } from "../../order/base/Order";
+import { Product } from "../../product/base/Product";
 
 @ObjectType()
 class Customer {
@@ -66,6 +73,14 @@ class Customer {
   id!: string;
 
   @ApiProperty({
+    required: true,
+    type: String,
+  })
+  @IsString()
+  @Field(() => String)
+  lastName!: string;
+
+  @ApiProperty({
     required: false,
     type: String,
   })
@@ -74,7 +89,18 @@ class Customer {
   @Field(() => String, {
     nullable: true,
   })
-  lastName!: string | null;
+  midleName!: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: Number,
+  })
+  @IsInt()
+  @IsOptional()
+  @Field(() => Number, {
+    nullable: true,
+  })
+  numbers!: number | null;
 
   @ApiProperty({
     required: false,
@@ -97,12 +123,32 @@ class Customer {
   phone!: string | null;
 
   @ApiProperty({
+    required: false,
+    type: () => [Product],
+  })
+  @ValidateNested()
+  @Type(() => Product)
+  @IsOptional()
+  products?: Array<Product>;
+
+  @ApiProperty({
     required: true,
   })
   @IsDate()
   @Type(() => Date)
   @Field(() => Date)
   updatedAt!: Date;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  username!: string | null;
 }
 
 export { Customer as Customer };

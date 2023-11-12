@@ -1,10 +1,13 @@
 import { JsonValue } from "type-fest";
 
 export type User = {
+  birthday: Date;
   createdAt: Date;
-  firstName: string | null;
+  firstName: string;
   id: string;
-  lastName: string | null;
+  lastName: string;
+  midleName: string | null;
+  numbers: string | null;
   roles: JsonValue;
   updatedAt: Date;
   username: string;

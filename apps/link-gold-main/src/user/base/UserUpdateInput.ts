@@ -11,7 +11,8 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsOptional } from "class-validator";
+import { IsDate, IsOptional, IsString } from "class-validator";
+import { Type } from "class-transformer";
 import { IsJSONValue } from "@app/custom-validators";
 import { GraphQLJSON } from "graphql-type-json";
 import { InputJsonValue } from "../../types";
@@ -20,14 +21,14 @@ import { InputJsonValue } from "../../types";
 class UserUpdateInput {
   @ApiProperty({
     required: false,
-    type: String,
   })
-  @IsString()
+  @IsDate()
+  @Type(() => Date)
   @IsOptional()
-  @Field(() => String, {
+  @Field(() => Date, {
     nullable: true,
   })
-  firstName?: string | null;
+  birthday?: Date;
 
   @ApiProperty({
     required: false,
@@ -38,7 +39,40 @@ class UserUpdateInput {
   @Field(() => String, {
     nullable: true,
   })
-  lastName?: string | null;
+  firstName?: string;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  lastName?: string;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  midleName?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  numbers?: string | null;
 
   @ApiProperty({
     required: false,

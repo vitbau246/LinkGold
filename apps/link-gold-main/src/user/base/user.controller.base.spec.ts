@@ -18,39 +18,51 @@ import { UserService } from "../user.service";
 const nonExistingId = "nonExistingId";
 const existingId = "existingId";
 const CREATE_INPUT = {
+  birthday: new Date(),
   createdAt: new Date(),
   firstName: "exampleFirstName",
   id: "exampleId",
   lastName: "exampleLastName",
+  midleName: "exampleMidleName",
+  numbers: "exampleNumbers",
   password: "examplePassword",
   updatedAt: new Date(),
   username: "exampleUsername",
 };
 const CREATE_RESULT = {
+  birthday: new Date(),
   createdAt: new Date(),
   firstName: "exampleFirstName",
   id: "exampleId",
   lastName: "exampleLastName",
+  midleName: "exampleMidleName",
+  numbers: "exampleNumbers",
   password: "examplePassword",
   updatedAt: new Date(),
   username: "exampleUsername",
 };
 const FIND_MANY_RESULT = [
   {
+    birthday: new Date(),
     createdAt: new Date(),
     firstName: "exampleFirstName",
     id: "exampleId",
     lastName: "exampleLastName",
+    midleName: "exampleMidleName",
+    numbers: "exampleNumbers",
     password: "examplePassword",
     updatedAt: new Date(),
     username: "exampleUsername",
   },
 ];
 const FIND_ONE_RESULT = {
+  birthday: new Date(),
   createdAt: new Date(),
   firstName: "exampleFirstName",
   id: "exampleId",
   lastName: "exampleLastName",
+  midleName: "exampleMidleName",
+  numbers: "exampleNumbers",
   password: "examplePassword",
   updatedAt: new Date(),
   username: "exampleUsername",
@@ -138,6 +150,7 @@ describe("User", () => {
       .expect(HttpStatus.CREATED)
       .expect({
         ...CREATE_RESULT,
+        birthday: CREATE_RESULT.birthday.toISOString(),
         createdAt: CREATE_RESULT.createdAt.toISOString(),
         updatedAt: CREATE_RESULT.updatedAt.toISOString(),
       });
@@ -150,6 +163,7 @@ describe("User", () => {
       .expect([
         {
           ...FIND_MANY_RESULT[0],
+          birthday: FIND_MANY_RESULT[0].birthday.toISOString(),
           createdAt: FIND_MANY_RESULT[0].createdAt.toISOString(),
           updatedAt: FIND_MANY_RESULT[0].updatedAt.toISOString(),
         },
@@ -173,6 +187,7 @@ describe("User", () => {
       .expect(HttpStatus.OK)
       .expect({
         ...FIND_ONE_RESULT,
+        birthday: FIND_ONE_RESULT.birthday.toISOString(),
         createdAt: FIND_ONE_RESULT.createdAt.toISOString(),
         updatedAt: FIND_ONE_RESULT.updatedAt.toISOString(),
       });
@@ -186,6 +201,7 @@ describe("User", () => {
       .expect(HttpStatus.CREATED)
       .expect({
         ...CREATE_RESULT,
+        birthday: CREATE_RESULT.birthday.toISOString(),
         createdAt: CREATE_RESULT.createdAt.toISOString(),
         updatedAt: CREATE_RESULT.updatedAt.toISOString(),
       })

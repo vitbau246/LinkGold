@@ -12,9 +12,10 @@ https://docs.amplication.com/how-to/custom-code
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { AddressWhereUniqueInput } from "../../address/base/AddressWhereUniqueInput";
-import { ValidateNested, IsOptional, IsString } from "class-validator";
+import { ValidateNested, IsOptional, IsString, IsInt } from "class-validator";
 import { Type } from "class-transformer";
 import { OrderCreateNestedManyWithoutCustomersInput } from "./OrderCreateNestedManyWithoutCustomersInput";
+import { ProductCreateNestedManyWithoutCustomersInput } from "./ProductCreateNestedManyWithoutCustomersInput";
 
 @InputType()
 class CustomerCreateInput {
@@ -53,6 +54,14 @@ class CustomerCreateInput {
   firstName?: string | null;
 
   @ApiProperty({
+    required: true,
+    type: String,
+  })
+  @IsString()
+  @Field(() => String)
+  lastName!: string;
+
+  @ApiProperty({
     required: false,
     type: String,
   })
@@ -61,7 +70,18 @@ class CustomerCreateInput {
   @Field(() => String, {
     nullable: true,
   })
-  lastName?: string | null;
+  midleName?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: Number,
+  })
+  @IsInt()
+  @IsOptional()
+  @Field(() => Number, {
+    nullable: true,
+  })
+  numbers?: number | null;
 
   @ApiProperty({
     required: false,
@@ -85,6 +105,29 @@ class CustomerCreateInput {
     nullable: true,
   })
   phone?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => ProductCreateNestedManyWithoutCustomersInput,
+  })
+  @ValidateNested()
+  @Type(() => ProductCreateNestedManyWithoutCustomersInput)
+  @IsOptional()
+  @Field(() => ProductCreateNestedManyWithoutCustomersInput, {
+    nullable: true,
+  })
+  products?: ProductCreateNestedManyWithoutCustomersInput;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  username?: string | null;
 }
 
 export { CustomerCreateInput as CustomerCreateInput };

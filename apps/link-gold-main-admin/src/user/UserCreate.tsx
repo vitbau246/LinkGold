@@ -4,6 +4,7 @@ import {
   Create,
   SimpleForm,
   CreateProps,
+  DateTimeInput,
   TextInput,
   PasswordInput,
   SelectArrayInput,
@@ -15,8 +16,11 @@ export const UserCreate = (props: CreateProps): React.ReactElement => {
   return (
     <Create {...props}>
       <SimpleForm>
+        <DateTimeInput label="Birthday" source="birthday" />
         <TextInput label="First Name" source="firstName" />
         <TextInput label="Last Name" source="lastName" />
+        <TextInput label="Midle Name" source="midleName" />
+        <TextInput label="numbers" source="numbers" />
         <PasswordInput label="Password" source="password" />
         <SelectArrayInput
           source="roles"

@@ -7,12 +7,14 @@ import {
   ReferenceInput,
   SelectInput,
   TextInput,
+  NumberInput,
   ReferenceArrayInput,
   SelectArrayInput,
 } from "react-admin";
 
 import { AddressTitle } from "../address/AddressTitle";
 import { OrderTitle } from "../order/OrderTitle";
+import { ProductTitle } from "../product/ProductTitle";
 
 export const CustomerEdit = (props: EditProps): React.ReactElement => {
   return (
@@ -24,6 +26,8 @@ export const CustomerEdit = (props: EditProps): React.ReactElement => {
         <TextInput label="Email" source="email" type="email" />
         <TextInput label="First Name" source="firstName" />
         <TextInput label="Last Name" source="lastName" />
+        <TextInput label="MidleName" source="midleName" />
+        <NumberInput step={1} label="numbers" source="numbers" />
         <ReferenceArrayInput
           source="orders"
           reference="Order"
@@ -33,6 +37,15 @@ export const CustomerEdit = (props: EditProps): React.ReactElement => {
           <SelectArrayInput optionText={OrderTitle} />
         </ReferenceArrayInput>
         <TextInput label="Phone" source="phone" />
+        <ReferenceArrayInput
+          source="products"
+          reference="Product"
+          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
+          format={(value: any) => value && value.map((v: any) => v.id)}
+        >
+          <SelectArrayInput optionText={ProductTitle} />
+        </ReferenceArrayInput>
+        <TextInput label="username" source="username" />
       </SimpleForm>
     </Edit>
   );

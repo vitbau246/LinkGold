@@ -10,7 +10,7 @@ https://docs.amplication.com/how-to/custom-code
 ------------------------------------------------------------------------------
   */
 import { PrismaService } from "../../prisma/prisma.service";
-import { Prisma, Customer, Order, Address } from "@prisma/client";
+import { Prisma, Customer, Order, Product, Address } from "@prisma/client";
 
 export class CustomerServiceBase {
   constructor(protected readonly prisma: PrismaService) {}
@@ -56,6 +56,17 @@ export class CustomerServiceBase {
         where: { id: parentId },
       })
       .orders(args);
+  }
+
+  async findProducts(
+    parentId: string,
+    args: Prisma.ProductFindManyArgs
+  ): Promise<Product[]> {
+    return this.prisma.customer
+      .findUniqueOrThrow({
+        where: { id: parentId },
+      })
+      .products(args);
   }
 
   async getAddress(parentId: string): Promise<Address | null> {

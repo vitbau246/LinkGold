@@ -43,8 +43,11 @@ export const AddressShow = (props: ShowProps): React.ReactElement => {
             <TextField label="First Name" source="firstName" />
             <TextField label="ID" source="id" />
             <TextField label="Last Name" source="lastName" />
+            <TextField label="MidleName" source="midleName" />
+            <TextField label="numbers" source="numbers" />
             <TextField label="Phone" source="phone" />
             <DateField source="updatedAt" label="Updated At" />
+            <TextField label="username" source="username" />
           </Datagrid>
         </ReferenceManyField>
       </SimpleShowLayout>

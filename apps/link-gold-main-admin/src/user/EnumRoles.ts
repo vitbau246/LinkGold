@@ -1,3 +1,6 @@
 export enum EnumRoles {
-  User = "user",
+  Gold = "gold",
+  Free = "free",
+  Silver = "silver",
+  Diamond = "diamond",
 }

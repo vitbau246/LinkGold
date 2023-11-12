@@ -11,23 +11,35 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { StringNullableFilter } from "../../util/StringNullableFilter";
+import { DateTimeFilter } from "../../util/DateTimeFilter";
 import { Type } from "class-transformer";
 import { IsOptional } from "class-validator";
 import { StringFilter } from "../../util/StringFilter";
+import { StringNullableFilter } from "../../util/StringNullableFilter";
 
 @InputType()
 class UserWhereInput {
   @ApiProperty({
     required: false,
-    type: StringNullableFilter,
+    type: DateTimeFilter,
   })
-  @Type(() => StringNullableFilter)
+  @Type(() => DateTimeFilter)
   @IsOptional()
-  @Field(() => StringNullableFilter, {
+  @Field(() => DateTimeFilter, {
     nullable: true,
   })
-  firstName?: StringNullableFilter;
+  birthday?: DateTimeFilter;
+
+  @ApiProperty({
+    required: false,
+    type: StringFilter,
+  })
+  @Type(() => StringFilter)
+  @IsOptional()
+  @Field(() => StringFilter, {
+    nullable: true,
+  })
+  firstName?: StringFilter;
 
   @ApiProperty({
     required: false,
@@ -42,6 +54,17 @@ class UserWhereInput {
 
   @ApiProperty({
     required: false,
+    type: StringFilter,
+  })
+  @Type(() => StringFilter)
+  @IsOptional()
+  @Field(() => StringFilter, {
+    nullable: true,
+  })
+  lastName?: StringFilter;
+
+  @ApiProperty({
+    required: false,
     type: StringNullableFilter,
   })
   @Type(() => StringNullableFilter)
@@ -49,7 +72,18 @@ class UserWhereInput {
   @Field(() => StringNullableFilter, {
     nullable: true,
   })
-  lastName?: StringNullableFilter;
+  midleName?: StringNullableFilter;
+
+  @ApiProperty({
+    required: false,
+    type: StringNullableFilter,
+  })
+  @Type(() => StringNullableFilter)
+  @IsOptional()
+  @Field(() => StringNullableFilter, {
+    nullable: true,
+  })
+  numbers?: StringNullableFilter;
 
   @ApiProperty({
     required: false,

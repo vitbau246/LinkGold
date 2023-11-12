@@ -30,6 +30,9 @@ import { Customer } from "./Customer";
 import { OrderFindManyArgs } from "../../order/base/OrderFindManyArgs";
 import { Order } from "../../order/base/Order";
 import { OrderWhereUniqueInput } from "../../order/base/OrderWhereUniqueInput";
+import { ProductFindManyArgs } from "../../product/base/ProductFindManyArgs";
+import { Product } from "../../product/base/Product";
+import { ProductWhereUniqueInput } from "../../product/base/ProductWhereUniqueInput";
 
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
@@ -72,8 +75,11 @@ export class CustomerControllerBase {
         firstName: true,
         id: true,
         lastName: true,
+        midleName: true,
+        numbers: true,
         phone: true,
         updatedAt: true,
+        username: true,
       },
     });
   }
@@ -106,8 +112,11 @@ export class CustomerControllerBase {
         firstName: true,
         id: true,
         lastName: true,
+        midleName: true,
+        numbers: true,
         phone: true,
         updatedAt: true,
+        username: true,
       },
     });
   }
@@ -141,8 +150,11 @@ export class CustomerControllerBase {
         firstName: true,
         id: true,
         lastName: true,
+        midleName: true,
+        numbers: true,
         phone: true,
         updatedAt: true,
+        username: true,
       },
     });
     if (result === null) {
@@ -193,8 +205,11 @@ export class CustomerControllerBase {
           firstName: true,
           id: true,
           lastName: true,
+          midleName: true,
+          numbers: true,
           phone: true,
           updatedAt: true,
+          username: true,
         },
       });
     } catch (error) {
@@ -236,8 +251,11 @@ export class CustomerControllerBase {
           firstName: true,
           id: true,
           lastName: true,
+          midleName: true,
+          numbers: true,
           phone: true,
           updatedAt: true,
+          username: true,
         },
       });
     } catch (error) {
@@ -352,6 +370,111 @@ export class CustomerControllerBase {
   ): Promise<void> {
     const data = {
       orders: {
+        disconnect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @common.Get("/:id/products")
+  @ApiNestedQuery(ProductFindManyArgs)
+  @nestAccessControl.UseRoles({
+    resource: "Product",
+    action: "read",
+    possession: "any",
+  })
+  async findManyProducts(
+    @common.Req() request: Request,
+    @common.Param() params: CustomerWhereUniqueInput
+  ): Promise<Product[]> {
+    const query = plainToClass(ProductFindManyArgs, request.query);
+    const results = await this.service.findProducts(params.id, {
+      ...query,
+      select: {
+        createdAt: true,
+
+        customer: {
+          select: {
+            id: true,
+          },
+        },
+
+        description: true,
+        id: true,
+        itemPrice: true,
+        name: true,
+        updatedAt: true,
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results;
+  }
+
+  @common.Post("/:id/products")
+  @nestAccessControl.UseRoles({
+    resource: "Customer",
+    action: "update",
+    possession: "any",
+  })
+  async connectProducts(
+    @common.Param() params: CustomerWhereUniqueInput,
+    @common.Body() body: ProductWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      products: {
+        connect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Patch("/:id/products")
+  @nestAccessControl.UseRoles({
+    resource: "Customer",
+    action: "update",
+    possession: "any",
+  })
+  async updateProducts(
+    @common.Param() params: CustomerWhereUniqueInput,
+    @common.Body() body: ProductWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      products: {
+        set: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Delete("/:id/products")
+  @nestAccessControl.UseRoles({
+    resource: "Customer",
+    action: "update",
+    possession: "any",
+  })
+  async disconnectProducts(
+    @common.Param() params: CustomerWhereUniqueInput,
+    @common.Body() body: ProductWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      products: {
         disconnect: body,
       },
     };

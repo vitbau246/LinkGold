@@ -25,18 +25,23 @@ class User {
   @IsDate()
   @Type(() => Date)
   @Field(() => Date)
+  birthday!: Date;
+
+  @ApiProperty({
+    required: true,
+  })
+  @IsDate()
+  @Type(() => Date)
+  @Field(() => Date)
   createdAt!: Date;
 
   @ApiProperty({
-    required: false,
+    required: true,
     type: String,
   })
   @IsString()
-  @IsOptional()
-  @Field(() => String, {
-    nullable: true,
-  })
-  firstName!: string | null;
+  @Field(() => String)
+  firstName!: string;
 
   @ApiProperty({
     required: true,
@@ -47,6 +52,14 @@ class User {
   id!: string;
 
   @ApiProperty({
+    required: true,
+    type: String,
+  })
+  @IsString()
+  @Field(() => String)
+  lastName!: string;
+
+  @ApiProperty({
     required: false,
     type: String,
   })
@@ -55,7 +68,18 @@ class User {
   @Field(() => String, {
     nullable: true,
   })
-  lastName!: string | null;
+  midleName!: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  numbers!: string | null;
 
   @ApiProperty({
     required: true,

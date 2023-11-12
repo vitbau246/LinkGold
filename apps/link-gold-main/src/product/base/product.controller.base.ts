@@ -51,9 +51,24 @@ export class ProductControllerBase {
   })
   async create(@common.Body() data: ProductCreateInput): Promise<Product> {
     return await this.service.create({
-      data: data,
+      data: {
+        ...data,
+
+        customer: data.customer
+          ? {
+              connect: data.customer,
+            }
+          : undefined,
+      },
       select: {
         createdAt: true,
+
+        customer: {
+          select: {
+            id: true,
+          },
+        },
+
         description: true,
         id: true,
         itemPrice: true,
@@ -81,6 +96,13 @@ export class ProductControllerBase {
       ...args,
       select: {
         createdAt: true,
+
+        customer: {
+          select: {
+            id: true,
+          },
+        },
+
         description: true,
         id: true,
         itemPrice: true,
@@ -109,6 +131,13 @@ export class ProductControllerBase {
       where: params,
       select: {
         createdAt: true,
+
+        customer: {
+          select: {
+            id: true,
+          },
+        },
+
         description: true,
         id: true,
         itemPrice: true,
@@ -143,9 +172,24 @@ export class ProductControllerBase {
     try {
       return await this.service.update({
         where: params,
-        data: data,
+        data: {
+          ...data,
+
+          customer: data.customer
+            ? {
+                connect: data.customer,
+              }
+            : undefined,
+        },
         select: {
           createdAt: true,
+
+          customer: {
+            select: {
+              id: true,
+            },
+          },
+
           description: true,
           id: true,
           itemPrice: true,
@@ -182,6 +226,13 @@ export class ProductControllerBase {
         where: params,
         select: {
           createdAt: true,
+
+          customer: {
+            select: {
+              id: true,
+            },
+          },
+
           description: true,
           id: true,
           itemPrice: true,

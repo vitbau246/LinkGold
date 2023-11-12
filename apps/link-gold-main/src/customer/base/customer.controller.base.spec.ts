@@ -23,8 +23,11 @@ const CREATE_INPUT = {
   firstName: "exampleFirstName",
   id: "exampleId",
   lastName: "exampleLastName",
+  midleName: "exampleMidleName",
+  numbers: 42,
   phone: "examplePhone",
   updatedAt: new Date(),
+  username: "exampleUsername",
 };
 const CREATE_RESULT = {
   createdAt: new Date(),
@@ -32,8 +35,11 @@ const CREATE_RESULT = {
   firstName: "exampleFirstName",
   id: "exampleId",
   lastName: "exampleLastName",
+  midleName: "exampleMidleName",
+  numbers: 42,
   phone: "examplePhone",
   updatedAt: new Date(),
+  username: "exampleUsername",
 };
 const FIND_MANY_RESULT = [
   {
@@ -42,8 +48,11 @@ const FIND_MANY_RESULT = [
     firstName: "exampleFirstName",
     id: "exampleId",
     lastName: "exampleLastName",
+    midleName: "exampleMidleName",
+    numbers: 42,
     phone: "examplePhone",
     updatedAt: new Date(),
+    username: "exampleUsername",
   },
 ];
 const FIND_ONE_RESULT = {
@@ -52,8 +61,11 @@ const FIND_ONE_RESULT = {
   firstName: "exampleFirstName",
   id: "exampleId",
   lastName: "exampleLastName",
+  midleName: "exampleMidleName",
+  numbers: 42,
   phone: "examplePhone",
   updatedAt: new Date(),
+  username: "exampleUsername",
 };
 
 const service = {

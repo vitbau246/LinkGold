@@ -28,6 +28,7 @@ import { ProductFindUniqueArgs } from "./ProductFindUniqueArgs";
 import { Product } from "./Product";
 import { OrderFindManyArgs } from "../../order/base/OrderFindManyArgs";
 import { Order } from "../../order/base/Order";
+import { Customer } from "../../customer/base/Customer";
 import { ProductService } from "../product.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => Product)
@@ -94,7 +95,15 @@ export class ProductResolverBase {
   ): Promise<Product> {
     return await this.service.create({
       ...args,
-      data: args.data,
+      data: {
+        ...args.data,
+
+        customer: args.data.customer
+          ? {
+              connect: args.data.customer,
+            }
+          : undefined,
+      },
     });
   }
 
@@ -111,7 +120,15 @@ export class ProductResolverBase {
     try {
       return await this.service.update({
         ...args,
-        data: args.data,
+        data: {
+          ...args.data,
+
+          customer: args.data.customer
+            ? {
+                connect: args.data.customer,
+              }
+            : undefined,
+        },
       });
     } catch (error) {
       if (isRecordNotFoundError(error)) {
@@ -162,5 +179,26 @@ export class ProductResolverBase {
     }
 
     return results;
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => Customer, {
+    nullable: true,
+    name: "customer",
+  })
+  @nestAccessControl.UseRoles({
+    resource: "Customer",
+    action: "read",
+    possession: "any",
+  })
+  async resolveFieldCustomer(
+    @graphql.Parent() parent: Product
+  ): Promise<Customer | null> {
+    const result = await this.service.getCustomer(parent.id);
+
+    if (!result) {
+      return null;
+    }
+    return result;
   }
 }

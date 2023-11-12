@@ -16,7 +16,9 @@ import { ValidateNested, IsOptional } from "class-validator";
 import { Type } from "class-transformer";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { StringFilter } from "../../util/StringFilter";
+import { IntNullableFilter } from "../../util/IntNullableFilter";
 import { OrderListRelationFilter } from "../../order/base/OrderListRelationFilter";
+import { ProductListRelationFilter } from "../../product/base/ProductListRelationFilter";
 
 @InputType()
 class CustomerWhereInput {
@@ -67,6 +69,17 @@ class CustomerWhereInput {
 
   @ApiProperty({
     required: false,
+    type: StringFilter,
+  })
+  @Type(() => StringFilter)
+  @IsOptional()
+  @Field(() => StringFilter, {
+    nullable: true,
+  })
+  lastName?: StringFilter;
+
+  @ApiProperty({
+    required: false,
     type: StringNullableFilter,
   })
   @Type(() => StringNullableFilter)
@@ -74,7 +87,18 @@ class CustomerWhereInput {
   @Field(() => StringNullableFilter, {
     nullable: true,
   })
-  lastName?: StringNullableFilter;
+  midleName?: StringNullableFilter;
+
+  @ApiProperty({
+    required: false,
+    type: IntNullableFilter,
+  })
+  @Type(() => IntNullableFilter)
+  @IsOptional()
+  @Field(() => IntNullableFilter, {
+    nullable: true,
+  })
+  numbers?: IntNullableFilter;
 
   @ApiProperty({
     required: false,
@@ -98,6 +122,29 @@ class CustomerWhereInput {
     nullable: true,
   })
   phone?: StringNullableFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => ProductListRelationFilter,
+  })
+  @ValidateNested()
+  @Type(() => ProductListRelationFilter)
+  @IsOptional()
+  @Field(() => ProductListRelationFilter, {
+    nullable: true,
+  })
+  products?: ProductListRelationFilter;
+
+  @ApiProperty({
+    required: false,
+    type: StringNullableFilter,
+  })
+  @Type(() => StringNullableFilter)
+  @IsOptional()
+  @Field(() => StringNullableFilter, {
+    nullable: true,
+  })
+  username?: StringNullableFilter;
 }
 
 export { CustomerWhereInput as CustomerWhereInput };

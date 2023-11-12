@@ -236,8 +236,11 @@ export class AddressControllerBase {
         firstName: true,
         id: true,
         lastName: true,
+        midleName: true,
+        numbers: true,
         phone: true,
         updatedAt: true,
+        username: true,
       },
     });
     if (results === null) {
